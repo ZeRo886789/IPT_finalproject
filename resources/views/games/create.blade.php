@@ -1,0 +1,35 @@
+@extends('layouts.app')
+
+@section('content')
+<h1>Create Game</h1>
+<form action="{{ route('games.store') }}" method="POST" class="mt-4">
+    @csrf
+    <div class="mb-3">
+        <label class="form-label">Team ID</label>
+        <input type="number" name="team_id" class="form-control" value="{{ old('team_id') }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Date</label>
+        <input type="date" name="game_date" class="form-control" value="{{ old('game_date') }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Time</label>
+        <input type="time" name="time" class="form-control" value="{{ old('time') }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Venue</label>
+        <input type="text" name="venue" class="form-control" value="{{ old('venue') }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Status</label>
+        <select name="game_status" class="form-select">
+            <option value="Scheduled" {{ old('game_status') == 'Scheduled' ? 'selected' : '' }}>Scheduled</option>
+            <option value="Ongoing" {{ old('game_status') == 'Ongoing' ? 'selected' : '' }}>Ongoing</option>
+            <option value="Completed" {{ old('game_status') == 'Completed' ? 'selected' : '' }}>Completed</option>
+            <option value="Cancelled" {{ old('game_status') == 'Cancelled' ? 'selected' : '' }}>Cancelled</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Create</button>
+    <a href="{{ route('games.index') }}" class="btn btn-secondary">Back</a>
+</form>
+@endsection
