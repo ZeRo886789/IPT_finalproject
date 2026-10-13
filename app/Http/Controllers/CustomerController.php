@@ -13,7 +13,7 @@ class CustomerController extends Controller {
     public function create(){ return view('customers.create'); }
     public function store(Request $request){
         $data=$request->validate(['customer_code'=>'nullable|string|max:30|unique:customers,customer_code','name'=>'required|string|max:120','phone'=>'required|string|max:30','email'=>'nullable|email|max:120','address'=>'nullable|string|max:500','notes'=>'nullable|string|max:1000']);
-        $data['customer_code']=$data['customer_code'] ?: 'CUS-'.str_pad((string)(Customer::max('id')+1),4,'0',STR_PAD_LEFT);
+         $data['customer_code']=($data['customer_code'] ?? null) ?: 'CUS-'.str_pad((string)(Customer::max('id')+1),4,'0',STR_PAD_LEFT);
         Customer::create($data);
         return redirect()->route('customers.index')->with('success','Customer added successfully.');
     }

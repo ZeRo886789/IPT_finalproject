@@ -15,7 +15,7 @@ class ClothingOrderController extends Controller {
     public function create(){ return view('orders.create',['customers'=>Customer::orderBy('name')->get(),'employees'=>Employee::where('status','Active')->orderBy('name')->get()]); }
     public function store(Request $request){
         $data=$request->validate(['order_code'=>'nullable|string|max:30|unique:clothing_orders,order_code','customer_id'=>'required|exists:customers,id','employee_id'=>'nullable|exists:employees,id','garment_type'=>'required|string|max:100','fabric'=>'nullable|string|max:100','color'=>'nullable|string|max:60','size'=>'nullable|string|max:30','order_date'=>'required|date','due_date'=>'nullable|date|after_or_equal:order_date','total_amount'=>'required|numeric|min:0','status'=>'required|in:Pending,In Progress,Ready,Completed,Cancelled','special_instructions'=>'nullable|string|max:1500']);
-        $data['order_code']=$data['order_code'] ?: 'ORD-'.str_pad((string)(ClothingOrder::max('id')+1),5,'0',STR_PAD_LEFT);
+         $data['order_code']=($data['order_code'] ?? null) ?: 'ORD-'.str_pad((string)(ClothingOrder::max('id')+1),5,'0',STR_PAD_LEFT);
         ClothingOrder::create($data); return redirect()->route('orders.index')->with('success','Clothing order created successfully.');
     }
     public function show(ClothingOrder $order){ $order->load(['customer','employee','measurements','payments'=>fn($q)=>$q->latest()]); return view('orders.show',compact('order')); }

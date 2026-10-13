@@ -13,7 +13,7 @@ class EmployeeController extends Controller {
     public function create(){ return view('employees.create'); }
     public function store(Request $request){
         $data=$request->validate(['employee_code'=>'nullable|string|max:30|unique:employees,employee_code','name'=>'required|string|max:120','role'=>'required|string|max:80','phone'=>'required|string|max:30','email'=>'nullable|email|max:120','hire_date'=>'nullable|date','status'=>'required|in:Active,Inactive']);
-        $data['employee_code']=$data['employee_code'] ?: 'EMP-'.str_pad((string)(Employee::max('id')+1),4,'0',STR_PAD_LEFT);
+         $data['employee_code']=($data['employee_code'] ?? null) ?: 'EMP-'.str_pad((string)(Employee::max('id')+1),4,'0',STR_PAD_LEFT);
         Employee::create($data); return redirect()->route('employees.index')->with('success','Employee added successfully.');
     }
     public function show(Employee $employee){ $employee->load('orders.customer'); return view('employees.show',compact('employee')); }
