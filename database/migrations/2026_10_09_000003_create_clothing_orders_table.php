@@ -1,0 +1,26 @@
+<?php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void {
+        Schema::create('clothing_orders', function (Blueprint $table) {
+            $table->id();
+            $table->string('order_code')->unique();
+            $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('employee_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('garment_type');
+            $table->string('fabric')->nullable();
+            $table->string('color')->nullable();
+            $table->string('size')->nullable();
+            $table->date('order_date');
+            $table->date('due_date')->nullable();
+            $table->decimal('total_amount', 10, 2)->default(0);
+            $table->string('status')->default('Pending');
+            $table->text('special_instructions')->nullable();
+            $table->timestamps();
+        });
+    }
+    public function down(): void { Schema::dropIfExists('clothing_orders'); }
+};
