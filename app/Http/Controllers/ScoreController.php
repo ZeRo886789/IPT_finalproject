@@ -43,6 +43,15 @@ class ScoreController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show(Score $score)
+    {
+        $score->load('game', 'team');
+        return view('scores.show', compact('score'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Score $score)

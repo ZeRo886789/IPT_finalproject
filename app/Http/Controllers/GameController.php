@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use Illuminate\Http\Request;
 
-class gameController extends Controller
+class GameController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -39,6 +39,15 @@ class gameController extends Controller
         Game::create($data);
 
         return redirect()->route('games.index')->with('success', 'Game created.');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Game $game)
+    {
+        $game->load('team');
+        return view('games.show', compact('game'));
     }
 
     /**

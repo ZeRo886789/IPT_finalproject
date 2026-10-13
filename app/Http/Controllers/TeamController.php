@@ -33,12 +33,20 @@ class TeamController extends Controller
             'team_name' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'tel_no' => 'required|string|max:255',
-            'founded_year' => 'required|year',
+            'founded_year' => 'required|integer|min:1900|max:2100',
         ]);
 
         Team::create($data);
 
         return redirect()->route('teams.index')->with('success', 'Team created.');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Team $team)
+    {
+        return view('teams.show', compact('team'));
     }
 
     /**
@@ -59,7 +67,7 @@ class TeamController extends Controller
             'team_name' => 'sometimes|string|max:255',
             'city' => 'sometimes|string|max:255',
             'tel_no' => 'sometimes|string|max:255',
-            'founded_year' => 'sometimes|year',
+            'founded_year' => 'sometimes|integer|min:1900|max:2100',
         ]);
 
         $team->update($data);

@@ -41,6 +41,14 @@ class CoachController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show(Coach $coach)
+    {
+        return view('coaches.show', compact('coach'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Coach $coach)

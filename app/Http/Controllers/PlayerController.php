@@ -42,6 +42,14 @@ class PlayerController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show(Player $player)
+    {
+        return view('players.show', compact('player'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Player $player)
